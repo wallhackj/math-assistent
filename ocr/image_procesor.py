@@ -77,10 +77,11 @@ def get_test_images_from_directory(dataset_dir):
         print(f"Error : {e}")
         return None, None
 
+
 def train_model():
     train_dataset_dir = "D:\\Users\\Omnissiah\\Documents\\math-assistent\\ocr\\data"
     batch_size = 100
-    random_forest_classifier = RandomForestClassifier(n_estimators=50, warm_start=False)
+    random_forest_classifier = RandomForestClassifier(n_estimators=50, warm_start=True)
     
     print("Training the model...")
     for X_train_batch, Y_train_batch in generate_image_batches(train_dataset_dir, batch_size=batch_size):
@@ -88,7 +89,7 @@ def train_model():
         random_forest_classifier.fit(X_train_batch, Y_train_batch)
     
     # Get test data
-    X_test, Y_test = get_test_images_from_directory(train_dataset_dir)
+    X_test, Y_test = generate_image_batches(train_dataset_dir, batch_size=batch_size)
     
     if X_test and Y_test:
         accuracy_score = random_forest_classifier.score(X_test, Y_test)
@@ -103,4 +104,3 @@ def train_model():
         print("Error in test data processing.")
 
 train_model()
-
