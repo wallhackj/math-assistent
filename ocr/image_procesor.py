@@ -1,5 +1,4 @@
 import numpy as np
-import pands as pd
 import os 
 
 pwd = os.getcwd()
